@@ -1,7 +1,7 @@
 {
   "name": "final_project",
   "version": "1.0.0",
-  "description": "",
+  "description": "Final Project for Informatics 653: Back-End Web Development",
   "main": "server.js",
   "scripts": {
     "start": "node server",
@@ -17,5 +17,13 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ryoung27/INF_653_FINAL_PROJECT.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ryoung27/INF_653_FINAL_PROJECT/issues"
+  },
+  "homepage": "https://github.com/Ryoung27/INF_653_FINAL_PROJECT#readme"
 }
