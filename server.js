@@ -29,6 +29,7 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 
 // routes
 app.use('/', require('./routes/root'));
+app.use('/states', require('./routes/api/states'));
 
 //This is the default if it doesn't hit any of the above.
 //* means all, so it'll catch anything that isn't above.
