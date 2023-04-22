@@ -8,8 +8,19 @@ router.route('/')
     // .put(employeesController.updateEmployee)
     // .delete(employeesController.deleteEmployee);
 
-// router.route('/:id')
-    // .get(employeesController.getEmployee);
+router.route('/:state/nickname')
+    .get(statesController.getStateNickName);
+
+router.route('/:state/capital')
+    .get(statesController.getStateCapital);
+
+router.route('/:state/population')
+    .get(statesController.getStatePopulation);
+
+router.route('/:state')
+    .get(statesController.getState);
+
+
 
 
 module.exports = router;
