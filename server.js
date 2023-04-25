@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const cors = require('cors');
+
 const corsOptions = require('./config/corsOptions')
 const mongoose = require('mongoose');
 //DB connection.
@@ -13,6 +14,8 @@ const PORT = process.env.PORT || 3500;
 
 // Connect to MongoDB
 connectDB();
+
+// app.use(abbrevCheck);
 
 //Apply CORS
 // Cross Origin Resource Sharing
@@ -30,6 +33,7 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 // routes
 app.use('/', require('./routes/root'));
 app.use('/states', require('./routes/api/states'));
+// app.use("/states/:state/*", abbrevCheck);
 
 //This is the default if it doesn't hit any of the above.
 //* means all, so it'll catch anything that isn't above.

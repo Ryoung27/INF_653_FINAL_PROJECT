@@ -8,7 +8,7 @@ const stateSchema = new Schema({
         unique: true,
         match: /^[A-Z]{2}$/
     },
-    funFacts: {
+    funfacts: {
         type: [String],
         required: false
     }

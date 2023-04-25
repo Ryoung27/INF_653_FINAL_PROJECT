@@ -50,10 +50,29 @@ const getStatePopulation = async (req, res) => {
     res.json({"state": `${state.state}`, "population": `${state.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`});
 }
 
+
+const createNewState = async (req, res) => {
+    if (!req?.body?.stateCode) {
+        return res.status(400).json({ 'message': 'Invalid state abbreviation parameter'});
+    }
+
+    try {
+        const result = await State.create({
+            stateCode: req.body.stateCode,
+            funfact: req.body.funfact
+        });
+
+        res.status(201).json(result);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 module.exports = {
     getAllStates,
     getState,
     getStateNickName,
     getStateCapital,
-    getStatePopulation
+    getStatePopulation,
+    createNewState
 }
