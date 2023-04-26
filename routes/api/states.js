@@ -26,7 +26,14 @@ router.route('/:state/population')
 
         // app.use("/states/:state/funfact", myMiddleWare);
 router.route('/:state/funfact')
-    .post(statesController.createNewState)
+    .post(statesController.createNewState);
+
+router.route('/:state/funfact')
+    .put(statesController.updateState);
+
+
+router.route('/:state/funfact')
+    .delete(statesController.deleteFunFact);
 
 router.route('/:state')
     .get(statesController.getState);

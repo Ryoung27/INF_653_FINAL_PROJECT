@@ -83,11 +83,54 @@ const createNewState = async (req, res) => {
     }
 }
 
+const updateState = async (req, res) => {
+    if (!req?.body?.index) {
+        return res.status(400).json({ 'message': 'State fun fact index value required'});
+    }
+    if (!req?.body?.stateCode) {
+        return res.status(400).json({ 'message': 'Invalid state abbreviation parameter'});
+    }
+    if (!req?.body?.funfact) {
+        return res.status(400).json({ 'message': 'State fun fact value required'});
+    }
+}
+
+const deleteFunFact = async (req, res) => {
+    if (!req?.body?.index) {
+        return res.status(400).json({ 'message': 'State fun fact index value required'});
+    }
+    if (!req?.body?.stateCode) {
+        return res.status(400).json({ 'message': 'Invalid state abbreviation parameter'});
+    }
+
+    const funFactsIndex = req.body.index - 1;
+
+    const state = await State.findOne({ stateCode: req.body.stateCode }).exec();
+    const stateJSONData = data.states.find(state => state.code === req.body.stateCode.toUpperCase());
+
+    if (req.body.index > state.funfacts.length) {
+        return res.status(404).json({ "message": `No Fun Fact found at that index for ${stateJSONData.state}` })
+    }
+    state.funfacts.splice(funFactsIndex, 1);
+
+    const result = await State.findOneAndUpdate({
+        stateCode: req.body.stateCode
+    },
+    {
+        funfacts: state.funfacts,
+    },
+    {new: true}
+    );
+    res.status(201).json(result);
+}
+
 module.exports = {
     getAllStates,
     getState,
     getStateNickName,
     getStateCapital,
     getStatePopulation,
-    createNewState
+    createNewState,
+    updateState,
+    deleteFunFact
 }
