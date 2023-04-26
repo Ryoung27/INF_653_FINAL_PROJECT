@@ -52,17 +52,32 @@ const getStatePopulation = async (req, res) => {
 
 
 const createNewState = async (req, res) => {
+    if (!req?.body?.funfacts) {
+        return res.status(400).json({ 'message': 'State fun facts value required'});
+    }
     if (!req?.body?.stateCode) {
         return res.status(400).json({ 'message': 'Invalid state abbreviation parameter'});
     }
 
     try {
-        const result = await State.create({
-            stateCode: req.body.stateCode,
-            funfact: req.body.funfact
-        });
-
-        res.status(201).json(result);
+        const state = await State.findOne({ stateCode: req.body.stateCode }).exec();
+        if(!state){
+            const result = await State.create({
+                stateCode: req.body.stateCode,
+                funfacts: req.body.funfacts
+            });
+            res.status(201).json(result);
+        }else{
+            const result = await State.findOneAndUpdate({
+                stateCode: req.body.stateCode
+            },
+            {
+                $push: { funfacts: req.body.funfacts },
+            },
+            {new: true}
+            );
+            res.status(201).json(result);
+        }
     } catch (err) {
         console.error(err);
     }

@@ -9,7 +9,6 @@ const abbrevCheck = require('../../middleware/abbrevHandler')
 
 router.route('/')
     .get(statesController.getAllStates)
-    .post(statesController.createNewState)
     // .put(employeesController.updateEmployee)
     // .delete(employeesController.deleteEmployee);
     
@@ -25,10 +24,14 @@ router.route('/:state/capital')
 router.route('/:state/population')
     .get(abbrevCheck, statesController.getStatePopulation);
 
+        // app.use("/states/:state/funfact", myMiddleWare);
+router.route('/:state/funfact')
+    .post(statesController.createNewState)
+
 router.route('/:state')
     .get(statesController.getState);
 
-    // app.use("/states/:state/funfact", myMiddleWare);
+
 
 
 
