@@ -29,7 +29,7 @@ router.route('/:state/funfact')
     .post(statesController.createNewState);
 
 router.route('/:state/funfact')
-    .put(statesController.updateState);
+    .patch(statesController.updateState);
 
 
 router.route('/:state/funfact')
