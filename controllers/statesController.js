@@ -23,7 +23,17 @@ const getState = async (req, res) => {
     if (!state) {
         return res.status(400).json({ "message": `Invalid state abbreviation parameter` });
     }
-    res.json(state);
+    try{
+        const mongoState = await State.findOne({ stateCode: state.code }).exec()
+        state.funfacts = [];
+        for(let i = 0; i< mongoState.funfacts.length; i++){
+            state.funfacts.push(mongoState.funfacts[i]);
+        }
+        res.json(state);
+    } catch (err) {
+        console.error(err);
+    }
+    
 }
 
 const getStateNickName = async (req, res) => {
@@ -48,6 +58,17 @@ const getStatePopulation = async (req, res) => {
         return res.status(400).json({ "message": `Invalid state abbreviation parameter` });
     }
     res.json({"state": `${state.state}`, "population": `${state.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`});
+}
+
+const getFunFact = async (req, res) => {
+
+    const userState = data.states.find(state => state.code === req.params.state.toUpperCase());
+
+    const state = await State.findOne({ stateCode: userState.code }).exec();
+    const funFactLength = state.funfacts.length
+    const randomValue = Math.floor(Math.random() * funFactLength);
+
+    res.json({"funfact": `${state.funfacts[randomValue]}`});
 }
 
 
@@ -151,6 +172,7 @@ module.exports = {
     getStateNickName,
     getStateCapital,
     getStatePopulation,
+    getFunFact,
     createNewState,
     updateState,
     deleteFunFact
