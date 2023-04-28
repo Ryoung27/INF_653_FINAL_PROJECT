@@ -12,7 +12,7 @@ const getAllStates = async (req, res) => {
     if (req.query.contig === 'true') {
       allStates = allStates.filter(state => state.admission_number <= 48);
     } else if (req.query.contig === 'false') {
-      allStates = allStates.find(state => state.admission_number >=49);
+      allStates = allStates.filter(state => state.admission_number >= 49);
     }
 
     try{
@@ -71,6 +71,13 @@ const getStatePopulation = async (req, res) => {
     }
     res.json({"state": `${state.state}`, "population": `${state.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`});
 }
+
+const getStateAdmission = async (req, res) => {
+    const state = data.states.find(state => state.code === req.params.state.toUpperCase());
+    if (!state) {
+        return res.status(400).json({ "message": `Invalid state abbreviation parameter` });
+    }
+    res.json({"state": `${state.state}`, "admission": `${state.admission_date}`});}
 
 const getFunFact = async (req, res) => {
 
@@ -185,6 +192,7 @@ module.exports = {
     getStateCapital,
     getStatePopulation,
     getFunFact,
+    getStateAdmission,
     createNewState,
     updateState,
     deleteFunFact

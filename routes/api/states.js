@@ -9,11 +9,17 @@ const abbrevCheck = require('../../middleware/abbrevHandler')
 router.route('/')
     .get(statesController.getAllStates)
 
+router.route('/:state')
+    .get(statesController.getState);
+
 router.route('/:state/nickname')
     .get(statesController.getStateNickName);
 
 router.route('/:state/capital')
     .get(statesController.getStateCapital);
+
+router.route('/:state/admission')
+    .get(statesController.getStateAdmission);
 
     //Ronnie use the abbrevCheck for a post!!!
 router.route('/:state/population')
@@ -31,8 +37,5 @@ router.route('/:state/funfact')
 
 router.route('/:state/funfact')
     .delete(statesController.deleteFunFact);
-
-router.route('/:state')
-    .get(statesController.getState);
 
 module.exports = router;
