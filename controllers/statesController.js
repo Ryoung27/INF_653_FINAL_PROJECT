@@ -5,7 +5,7 @@ const data = {
     setStates: function (data) { this.states = data }
 }
 
-const getAllStates = (req, res) => {
+const getAllStates = async (req, res) => {
     let allStates = data.states;
   
     //Didn't like using a magic number, but the non-contingous states are greater than 48.
@@ -14,8 +14,20 @@ const getAllStates = (req, res) => {
     } else if (req.query.contig === 'false') {
       allStates = allStates.find(state => state.admission_number >=49);
     }
-    
-    res.json(allStates);
+
+    try{
+        const mongoState = await State.find().exec()
+        for(let i = 0; i< allStates.length; i++){
+            const state = mongoState.find(state => state.stateCode === allStates[i].code);
+            if(state !== undefined){
+                allStates[i].funfacts = [];
+                allStates[i].funfacts.push(...state.funfacts);
+            }
+        }
+        res.json(allStates);
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 const getState = async (req, res) => {
