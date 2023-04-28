@@ -1,7 +1,10 @@
 // Ronnie, this is important. Whatever our web application domain will access this domain server.
 //Where ever we host our front-end project we want our domain in this whitelist.
 const whitelist = [
-    'https://www.yoursite.com',
+    'https://glitch.com/edit/#!/gilded-celestial-cattle',
+    'https://gilded-celestial-cattle.glitch.me/',
+    'https://dazzling-snickerdoodle-777101.netlify.app/',
+    '*',
     'http://127.0.0.1:5500', 
     'http://localhost:3500'
 ];
@@ -11,7 +14,7 @@ const corsOptions = {
         if (whitelist.indexOf(origin) !== -1 || !origin){
             callback(null, true);
         }else{
-            callback(new Error('Not allowed by CORS'));
+            callback(null, true);
         }
     },
     optionsSuccessStatus: 200
